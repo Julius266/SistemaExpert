@@ -11,11 +11,11 @@ Este proyecto implementa un sistema de diagnóstico de enfermedades basado en re
 
 ## [Características](#características)
 - **Interfaz Amigable:**  Diseño intuitivo y fácil de usar.
-- **Diagnóstico Preliminar:** 📋 Obtén un diagnóstico preliminar basado en los síntomas proporcionados.
+- **Diagnóstico Preliminar:** Obtén un diagnóstico preliminar basado en los síntomas proporcionados.
 - **Recomendaciones de Salud:**  Recomendaciones para consultar con un profesional de la salud.
 - **Pruebas Automatizadas:** Verifica la lógica del sistema mediante pruebas automatizadas.
 
-## [Síntomas y Posibles Enfermedades](#síntomas-y-posibles-enfermedades)
+## [Síntomas](#síntomas)
 
 El sistema está diseñado para reconocer una variedad de síntomas comunes y proporcionar diagnósticos preliminares basados en ellos. Algunos de los síntomas que el sistema puede reconocer incluyen:
 
@@ -34,12 +34,12 @@ El sistema está diseñado para reconocer una variedad de síntomas comunes y pr
 Es importante recordar que estos diagnósticos son preliminares y siempre se debe consultar a un profesional de la salud para un diagnóstico adecuado.
 
 ## [Instalación y Configuración](#instalación-y-configuración)
-
-El primer paso es asegurarnos de tener instalado python en su versión 3.9
+El primer paso es asegurarnos de tener instalado python en su versión 3.9:
  ```bash
     python --version
     ```
 Luego:
+
 1. **Clona el repositorio:**
     ```bash
     git clone https://github.com/Julius266/SistemaExpert.git
