@@ -35,9 +35,9 @@ Es importante recordar que estos diagnósticos son preliminares y siempre se deb
 
 ## [Instalación y Configuración](#instalación-y-configuración)
 El primer paso es asegurarnos de tener instalado python en su versión 3.9:
- ```bash
+
     python --version
-    ```
+  
 Luego:
 
 1. **Clona el repositorio:**
