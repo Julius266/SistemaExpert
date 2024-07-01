@@ -7,7 +7,7 @@ class InterfazUsuario:
     def __init__(self, root, enviar_callback):
         self.root = root
         self.root.title("Información del Usuario")
-        self.root.geometry("800x600")
+        self.root.geometry("1000x800")
         self.root.configure(bg='light gray')
 
         # Estilo y fuentes
@@ -101,31 +101,19 @@ class InterfazUsuario:
         # Crear una nueva ventana para mostrar los resultados con la imagen
         self.resultado_window = tk.Toplevel(self.root)
         self.resultado_window.title("Resultados del Diagnóstico")
-        self.resultado_window.geometry("600x400")
+        self.resultado_window.geometry("1000x800")
         self.resultado_window.configure(bg='light gray')
 
-        # Agregar la imagen de Dr. Simi a la ventana de resultados
-        image_path = os.path.join(os.path.dirname(__file__), '..', 'images', 'dr-simi.png')
+        # Agregar la imagen de Diagnostico a la ventana de resultados
+        image_path = os.path.join(os.path.dirname(__file__), '..', 'images', 'diagnostico.png')
         self.simi_image_resultado = PhotoImage(file=image_path)
+        self.simi_image_resultado = self.simi_image_resultado.subsample(2)
         self.simi_label_resultado = tk.Label(self.resultado_window, image=self.simi_image_resultado, bg='light gray')
         self.simi_label_resultado.pack(pady=20)
 
-        # Agregar el texto del resultado a la ventana de resultados
-        self.resultado_label = tk.Label(self.resultado_window, text=resultado, font=self.label_font, bg='light gray', justify=tk.LEFT)
-        self.resultado_label.pack(pady=10)
+        # Agregar el texto del resultado centrado a la ventana de resultados
+        self.resultado_label = tk.Label(self.resultado_window, text=resultado, font=self.label_font, bg='light gray', justify=tk.CENTER)
+        self.resultado_label.pack(pady=50, padx=50, fill=tk.BOTH, expand=True)
 
         cerrar_button = tk.Button(self.resultado_window, text="Cerrar", font=self.button_font, command=self.resultado_window.destroy, bg='gray', fg='white')
         cerrar_button.pack(pady=20)
-
-# Ejemplo de uso
-if __name__ == "__main__":
-    root = tk.Tk()
-    def enviar_informacion(interfaz):
-        info_usuario = interfaz.obtener_informacion_usuario()
-        sintomas_usuario = interfaz.obtener_sintomas()
-        print("Información del usuario:", info_usuario)
-        print("Síntomas del usuario:", sintomas_usuario)
-        interfaz.imprimir_resultados(info_usuario, "Diagnóstico de prueba")
-    
-    interfaz = InterfazUsuario(root, lambda: enviar_informacion(interfaz))
-    root.mainloop()
