@@ -15,18 +15,10 @@ Este proyecto implementa un sistema de diagnóstico de enfermedades basado en re
 - **Interfaz de Usuario:** Una interfaz de usuario simple para recopilar la información del usuario y sus síntomas.
 
 ## 🌟 [Características](#características)
-
 - **Interfaz Amigable:** 👍 Diseño intuitivo y fácil de usar.
 - **Diagnóstico Preliminar:** 📋 Obtén un diagnóstico preliminar basado en los síntomas proporcionados.
 - **Recomendaciones de Salud:** 🩺 Recomendaciones para consultar con un profesional de la salud.
 - **Pruebas Automatizadas:** 🧪 Verifica la lógica del sistema mediante pruebas automatizadas.
-
-## 🖥️ [Uso](#uso)
-
-1. **Proporciona tu Información:** 🙍 Introduce tu nombre y lugar de origen.
-2. **Describe tus Síntomas:** 🤒 Selecciona los síntomas que estás experimentando.
-3. **Obtén un Diagnóstico Preliminar:** 📋 Recibe un diagnóstico preliminar basado en las reglas definidas.
-4. **Consulta a un Profesional de la Salud:** 🩺 Siempre consulta con un profesional de la salud para un diagnóstico adecuado.
 
 ## 💉 [Síntomas y Posibles Enfermedades](#síntomas-y-posibles-enfermedades)
 
@@ -53,22 +45,22 @@ Es importante recordar que estos diagnósticos son preliminares y siempre se deb
 
 1. **Clona el repositorio:**
     ```bash
-    git clone https://github.com/sebastins18/Analisis_Enfermedades.git
+    git clone https://github.com/Julius266/SistemaExpert.git
     ```
 
 2. **Cambia al directorio del proyecto:**
     ```bash
-    cd Analisis_Enfermedades
+    cd SistemaExpert
     ```
 
 3. **Crea un ambiente conda:**
     ```bash
-    conda create --name Analisis_Enfermedades python=3.x
+    conda create --name SistemaExpert python=3.x
     ```
 
 4. **Activa el ambiente conda:**
     ```bash
-    conda activate Analisis_Enfermedades
+    conda activate SistemaExpert
     ```
 
 5. **Instala las dependencias:**
@@ -80,7 +72,6 @@ Es importante recordar que estos diagnósticos son preliminares y siempre se deb
     ```bash
     python main.py
     ```
-
 
 ## 🧪 [Pruebas](#pruebas)
 
@@ -95,31 +86,22 @@ Este proyecto incluye una suite de pruebas diseñada para validar la lógica y f
 
 2. **Ejecuta las pruebas con `pytest`:**
     ```bash
-    pytest -v -s -l --durations=0 .\test\test_diagnostico_2.py
+    pytest -v -s -l --durations=0 ./tests/test_diagnostico.py
     ```
 
     Los flags `-v`, `-s`, `-l` y `--durations=0` proporcionan una salida detallada, mostrando todas las pruebas que se ejecutan y el tiempo que tarda cada una.
 
 ### Usando unittest
 
-1. **Ejecuta las pruebas con `unittest` para `test_diagnostico_1.py`:**
+1. **Ejecuta las pruebas con `unittest` para `test_diagnostico.py`:**
     ```bash
-    python -m unittest discover test
+    python -m unittest discover tests
     ```
 
-    Esto ejecutará todas las pruebas contenidas en el directorio `test`.
+    Esto ejecutará todas las pruebas contenidas en el directorio `tests`.
 
 Ambas herramientas proporcionan una manera efectiva de validar que el código funcione como se espera y ayudan a identificar problemas antes de que lleguen a la producción.
 
-
-
-## 👨‍💻 [Desarrolladores](#desarrolladores)
-
-- [Sebastian Long Segura Méndez](mailto:sebastins08@gmail.com)
-- [Mauren Miranda Quesada](mailto:otro_correo@example.com)
-
-
 ## 🔗 [Enlace del Proyecto](#enlace-del-proyecto)
 
-[Sistema de Diagnóstico de Enfermedades Basado en Reglas](https://github.com/sebastins18/Analisis_Enfermedades.git)
-
+[Sistema de Diagnóstico de Enfermedades Basado en Reglas](https://github.com/Julius266/SistemaExpert.git)
