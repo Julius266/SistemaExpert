@@ -61,4 +61,4 @@ Luego:
     ```
 ## 🔗 [Enlace del Proyecto](#enlace-del-proyecto)
 
-[Sistema de Diagnóstico de Enfermedades Basado en Reglas](https://github.com/Julius266/SistemaExpert.git)
+[Sistema Experto Basado en Reglas](https://github.com/Julius266/SistemaExpert.git)
