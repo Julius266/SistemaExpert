@@ -8,41 +8,41 @@ class InterfazUsuario:
         self.root = root
         self.root.title("Información del Usuario")
         self.root.geometry("1000x800")
-        self.root.configure(bg='light gray')
+        self.root.configure(bg='#e6f7ff')  # Fondo azul claro
 
         # Estilo y fuentes
-        self.title_font = ("Helvetica", 18, "bold")
-        self.label_font = ("Helvetica", 12)
-        self.button_font = ("Helvetica", 12, "bold")
+        self.title_font = ("Helvetica Neue", 24, "bold")
+        self.label_font = ("Helvetica Neue", 14)
+        self.button_font = ("Helvetica Neue", 14, "bold")
 
         # Agregar imagen de Dr. Simi
         image_path = os.path.join(os.path.dirname(__file__), '..', 'images', 'dr-simi.png')
         self.simi_image = PhotoImage(file=image_path)
-        self.simi_label = tk.Label(root, image=self.simi_image, bg='light gray')
+        self.simi_label = tk.Label(root, image=self.simi_image, bg='#e6f7ff')
         self.simi_label.pack(pady=20)
 
         # Título
-        self.title_label = tk.Label(root, text="Sistema Experto de Diagnóstico", font=self.title_font, bg='light gray')
+        self.title_label = tk.Label(root, text="Sistema Experto de Diagnóstico", font=self.title_font, bg='#e6f7ff')
         self.title_label.pack(pady=10)
 
         # Nombre
-        self.nombre_label = tk.Label(root, text="Por favor, ingresa tu nombre:", font=self.label_font, bg='light gray')
+        self.nombre_label = tk.Label(root, text="Por favor, ingresa tu nombre:", font=self.label_font, bg='#e6f7ff')
         self.nombre_label.pack(pady=5)
         self.nombre_entry = tk.Entry(root, font=self.label_font, width=30)
         self.nombre_entry.pack(pady=5)
 
         # Lugar de origen
-        self.lugar_label = tk.Label(root, text="Ingresa tu lugar de origen:", font=self.label_font, bg='light gray')
+        self.lugar_label = tk.Label(root, text="Ingresa tu lugar de origen:", font=self.label_font, bg='#e6f7ff')
         self.lugar_label.pack(pady=5)
         self.lugar_entry = tk.Entry(root, font=self.label_font, width=30)
         self.lugar_entry.pack(pady=5)
 
         # Botón para ingresar síntomas
-        self.sintomas_button = tk.Button(root, text="Ingresar síntomas", font=self.button_font, command=self.obtener_sintomas_usuario, bg='gray', fg='white')
+        self.sintomas_button = tk.Button(root, text="Ingresar síntomas", font=self.button_font, command=self.obtener_sintomas_usuario, bg='#007acc', fg='white', relief=tk.FLAT)
         self.sintomas_button.pack(pady=20)
 
         # Botón para enviar información
-        self.enviar_button = tk.Button(root, text="Enviar", font=self.button_font, command=enviar_callback, bg='gray', fg='white')
+        self.enviar_button = tk.Button(root, text="Enviar", font=self.button_font, command=enviar_callback, bg='#007acc', fg='white', relief=tk.FLAT)
         self.enviar_button.pack(pady=10)
 
         self.sintomas_usuario = {}
@@ -56,7 +56,7 @@ class InterfazUsuario:
         self.sintomas_window = tk.Toplevel(self.root)
         self.sintomas_window.title("Síntomas del Usuario")
         self.sintomas_window.geometry("400x400")
-        self.sintomas_window.configure(bg='light gray')
+        self.sintomas_window.configure(bg='#e6f7ff')
 
         ruta_sintomas = cargar_variable_entorno('SINTOMAS_FILE_PATH')
         try:
@@ -64,19 +64,19 @@ class InterfazUsuario:
                 sintomas = [line.strip() for line in file.readlines()]
                 for sintoma in sintomas:
                     var = tk.StringVar(value='n')
-                    frame = tk.Frame(self.sintomas_window, pady=5, bg='light gray')
+                    frame = tk.Frame(self.sintomas_window, pady=5, bg='#e6f7ff')
                     frame.pack(anchor="w")
-                    label = tk.Label(frame, text=f"Tiene {sintoma}?", font=self.label_font, bg='light gray')
+                    label = tk.Label(frame, text=f"Tiene {sintoma}?", font=self.label_font, bg='#e6f7ff')
                     label.pack(side=tk.LEFT, padx=5)
-                    si_radio = tk.Radiobutton(frame, text="Sí", variable=var, value='s', font=self.label_font, bg='light gray')
+                    si_radio = tk.Radiobutton(frame, text="Sí", variable=var, value='s', font=self.label_font, bg='#e6f7ff')
                     si_radio.pack(side=tk.LEFT, padx=5)
-                    no_radio = tk.Radiobutton(frame, text="No", variable=var, value='n', font=self.label_font, bg='light gray')
+                    no_radio = tk.Radiobutton(frame, text="No", variable=var, value='n', font=self.label_font, bg='#e6f7ff')
                     no_radio.pack(side=tk.LEFT, padx=5)
                     self.sintomas_usuario[sintoma] = var
         except FileNotFoundError:
             messagebox.showerror("Error", f"El archivo en '{ruta_sintomas}' no se encontró.")
         
-        cerrar_button = tk.Button(self.sintomas_window, text="Cerrar", font=self.button_font, command=self.sintomas_window.destroy, bg='gray', fg='white')
+        cerrar_button = tk.Button(self.sintomas_window, text="Cerrar", font=self.button_font, command=self.sintomas_window.destroy, bg='#007acc', fg='white', relief=tk.FLAT)
         cerrar_button.pack(pady=20)
 
     def obtener_sintomas(self):
@@ -102,18 +102,18 @@ class InterfazUsuario:
         self.resultado_window = tk.Toplevel(self.root)
         self.resultado_window.title("Resultados del Diagnóstico")
         self.resultado_window.geometry("1000x800")
-        self.resultado_window.configure(bg='light gray')
+        self.resultado_window.configure(bg='#e6f7ff')
 
         # Agregar la imagen de Diagnostico a la ventana de resultados
         image_path = os.path.join(os.path.dirname(__file__), '..', 'images', 'diagnostico.png')
         self.simi_image_resultado = PhotoImage(file=image_path)
         self.simi_image_resultado = self.simi_image_resultado.subsample(2)
-        self.simi_label_resultado = tk.Label(self.resultado_window, image=self.simi_image_resultado, bg='light gray')
+        self.simi_label_resultado = tk.Label(self.resultado_window, image=self.simi_image_resultado, bg='#e6f7ff')
         self.simi_label_resultado.pack(pady=20)
 
         # Agregar el texto del resultado centrado a la ventana de resultados
-        self.resultado_label = tk.Label(self.resultado_window, text=resultado, font=self.label_font, bg='light gray', justify=tk.CENTER)
-        self.resultado_label.pack(pady=50, padx=50, fill=tk.BOTH, expand=True)
+        self.resultado_label = tk.Label(self.resultado_window, text=resultado, font=self.label_font, bg='#e6f7ff', justify=tk.CENTER)
+        self.resultado_label.pack(fill=tk.BOTH, expand=True)
 
-        cerrar_button = tk.Button(self.resultado_window, text="Cerrar", font=self.button_font, command=self.resultado_window.destroy, bg='gray', fg='white')
+        cerrar_button = tk.Button(self.resultado_window, text="Cerrar", font=self.button_font, command=self.resultado_window.destroy, bg='#007acc', fg='white', relief=tk.FLAT)
         cerrar_button.pack(pady=20)
