@@ -1,7 +1,9 @@
-import tkinter as tk
-from tkinter import messagebox, PhotoImage
-from src.utils.helpers import cargar_variable_entorno
 import os
+from dotenv import load_dotenv
+from tkinter import Tk, PhotoImage, messagebox
+import tkinter as tk
+from src.utils.helpers import cargar_variable_entorno
+from src.diagnostico import Diagnostico, Sintoma
 
 class InterfazUsuario:
     def __init__(self, root, enviar_callback):
@@ -55,13 +57,13 @@ class InterfazUsuario:
     def obtener_sintomas_usuario(self):
         self.sintomas_window = tk.Toplevel(self.root)
         self.sintomas_window.title("Síntomas del Usuario")
-        self.sintomas_window.geometry("400x400")
+        self.sintomas_window.geometry("400x600")  # Ajusta el tamaño de la ventana aquí
         self.sintomas_window.configure(bg='#e6f7ff')
 
         ruta_sintomas = cargar_variable_entorno('SINTOMAS_FILE_PATH')
         try:
             with open(ruta_sintomas, 'r', encoding='utf-8') as file:
-                sintomas = [line.strip() for line in file.readlines()]
+                sintomas = [line.strip().replace('_', ' ') for line in file.readlines()]  # Reemplaza los guiones bajos por espacios
                 for sintoma in sintomas:
                     var = tk.StringVar(value='n')
                     frame = tk.Frame(self.sintomas_window, pady=5, bg='#e6f7ff')
@@ -72,9 +74,9 @@ class InterfazUsuario:
                     si_radio.pack(side=tk.LEFT, padx=5)
                     no_radio = tk.Radiobutton(frame, text="No", variable=var, value='n', font=self.label_font, bg='#e6f7ff')
                     no_radio.pack(side=tk.LEFT, padx=5)
-                    self.sintomas_usuario[sintoma] = var
+                    self.sintomas_usuario[sintoma.replace(' ', '_')] = var
         except FileNotFoundError:
-            messagebox.showerror("Error", f"El archivo en '{ruta_sintomas}' no se encontró.")
+            self.mostrar_error(f"El archivo en '{ruta_sintomas}' no se encontró.")
         
         cerrar_button = tk.Button(self.sintomas_window, text="Cerrar", font=self.button_font, command=self.sintomas_window.destroy, bg='#007acc', fg='white', relief=tk.FLAT)
         cerrar_button.pack(pady=20)
@@ -92,16 +94,11 @@ class InterfazUsuario:
                 resultado += "- " + diagnostico + "\n"
         else:
             resultado += "No se pudo determinar un diagnóstico basado en los síntomas proporcionados.\n"
-        resultado += (
-            "Recuerda, los diagnósticos proporcionados son solamente posibilidades y no deben ser "
-            "considerados como diagnósticos médicos definitivos. Por favor, consulta a un profesional "
-            "de la salud para obtener un diagnóstico adecuado."
-        )
         
         # Crear una nueva ventana para mostrar los resultados con la imagen
         self.resultado_window = tk.Toplevel(self.root)
         self.resultado_window.title("Resultados del Diagnóstico")
-        self.resultado_window.geometry("1000x800")
+        self.resultado_window.geometry("1000x600")  # Ajusta la altura de la ventana aquí
         self.resultado_window.configure(bg='#e6f7ff')
 
         # Agregar la imagen de Diagnostico a la ventana de resultados
@@ -112,8 +109,53 @@ class InterfazUsuario:
         self.simi_label_resultado.pack(pady=20)
 
         # Agregar el texto del resultado centrado a la ventana de resultados
-        self.resultado_label = tk.Label(self.resultado_window, text=resultado, font=self.label_font, bg='#e6f7ff', justify=tk.CENTER)
+        self.resultado_label = tk.Label(self.resultado_window, text=resultado, font=self.label_font, bg='#e6f7ff', justify=tk.CENTER, wraplength=900)
         self.resultado_label.pack(fill=tk.BOTH, expand=True)
+
+        # Agregar el texto de advertencia en letras pequeñas
+        self.advertencia_label = tk.Label(self.resultado_window, text=(
+            "Recuerda, los diagnósticos proporcionados son solamente posibilidades y no deben ser "
+            "considerados como diagnósticos médicos definitivos. Por favor, consulta a un profesional "
+            "de la salud para obtener un diagnóstico adecuado."
+        ), font=("Helvetica Neue", 10), bg='#e6f7ff', justify=tk.CENTER, wraplength=900)
+        self.advertencia_label.pack(pady=10)
 
         cerrar_button = tk.Button(self.resultado_window, text="Cerrar", font=self.button_font, command=self.resultado_window.destroy, bg='#007acc', fg='white', relief=tk.FLAT)
         cerrar_button.pack(pady=20)
+
+    def mostrar_error(self, mensaje):
+        messagebox.showerror("Error", mensaje)
+
+def enviar_informacion(interfaz):
+    usuario = interfaz.obtener_informacion_usuario()
+
+    # Validar que nombre y lugar de origen no estén vacíos
+    if not usuario["nombre"] or not usuario["lugar"]:
+        messagebox.showerror("Error", "Por favor, ingrese su nombre y lugar de origen antes de enviar los síntomas.")
+        return
+
+    sintomas = interfaz.obtener_sintomas()
+
+    try:
+        motor_diagnostico = Diagnostico()
+        motor_diagnostico.reset()
+        declarar_sintomas(motor_diagnostico, sintomas)
+        motor_diagnostico.run()
+        diagnostico = motor_diagnostico.obtener_diagnostico(sintomas)
+        interfaz.imprimir_resultados(usuario, diagnostico)
+    except Exception as e:
+        interfaz.mostrar_error(f"Ha ocurrido un error: {e}")
+
+def declarar_sintomas(motor_diagnostico, sintomas):
+    for sintoma, valor in sintomas.items():
+        motor_diagnostico.declare(Sintoma(**{sintoma: valor}))
+
+def main():
+    root = Tk()
+    # Pasa enviar_informacion como enviar_callback
+    interfaz = InterfazUsuario(root, lambda: enviar_informacion(interfaz))
+    root.mainloop()
+
+if __name__ == "__main__":
+    load_dotenv()
+    main()

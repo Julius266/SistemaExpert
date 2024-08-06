@@ -9,6 +9,12 @@ load_dotenv()
 
 def enviar_informacion(interfaz):
     usuario = interfaz.obtener_informacion_usuario()
+    
+    # Validar que nombre y lugar de origen no estén vacíos
+    if not usuario["nombre"] or not usuario["lugar"]:
+        messagebox.showerror("Error", "Por favor, ingrese su nombre y lugar de origen antes de enviar los síntomas.")
+        return
+
     sintomas = interfaz.obtener_sintomas()
 
     try:
@@ -16,10 +22,10 @@ def enviar_informacion(interfaz):
         motor_diagnostico.reset()
         declarar_sintomas(motor_diagnostico, sintomas)
         motor_diagnostico.run()
-        diagnostico = motor_diagnostico.obtener_diagnostico()
+        diagnostico = motor_diagnostico.obtener_diagnostico(sintomas)
         interfaz.imprimir_resultados(usuario, diagnostico)
     except Exception as e:
-        interfaz.mostrar_error(f"Ha ocurrido un error: {e}")
+        messagebox.showerror("Error", f"Ha ocurrido un error: {e}")
 
 def declarar_sintomas(motor_diagnostico, sintomas):
     for sintoma, valor in sintomas.items():
@@ -32,4 +38,5 @@ def main():
     root.mainloop()
 
 if __name__ == "__main__":
+    load_dotenv()
     main()
